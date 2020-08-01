@@ -13,7 +13,12 @@ public class BibliotecaApp {
         switch(option)
         {
             case 1:{Book book = new Book();
-            System.out.println(book.toList());}
+                System.out.println(book.toList());
+                break;}
+            default :{
+                System.out.println("Please select a valid option!");
+                break;
+            }
         }
     }
 
