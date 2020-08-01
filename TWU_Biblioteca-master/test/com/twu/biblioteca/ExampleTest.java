@@ -15,7 +15,7 @@ public class ExampleTest {
 
     @Test
     public void shouldReturnBookTitle() {
-        Book book = new Book("Example1 Example2 Example3");
-        assertEquals("Example1 Example2 Example3", book.toList());
+        Book book = new Book("Title", "Author", 1874);
+        assertEquals("Title: Title Author: Author Year Published: 1874", book.toList());
     }
 }
