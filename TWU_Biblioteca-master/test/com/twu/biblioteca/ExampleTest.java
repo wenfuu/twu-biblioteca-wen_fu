@@ -12,4 +12,10 @@ public class ExampleTest {
         String result = app.WelcomeMessage();
         assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!", result);
     }
+
+    @Test
+    public void shouldReturnBookTitle() {
+        Book book = new Book("Example1 Example2 Example3");
+        assertEquals("Example1 Example2 Example3", book.toList());
+    }
 }
