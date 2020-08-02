@@ -8,8 +8,8 @@ public class ExampleTest {
 
     @Test
     public void shouldReturnWelcomeMessage() {
-        BibliotecaApp app = new BibliotecaApp();
-        String result = app.WelcomeMessage();
+        ConsoleOutput output = new ConsoleOutput();
+        String result = output.WelcomeMessage();
         assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!", result);
     }
 
