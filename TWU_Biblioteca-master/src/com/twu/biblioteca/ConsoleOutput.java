@@ -17,17 +17,16 @@ public class ConsoleOutput {
         return sc.nextInt();
     }
 
-    public String OptionResponse() {
+    public void OptionResponse() {
+        System.out.println(MenuOptions());
         int option = GetOption();
-        switch(option) {
-            case 1: {Book book = new Book();
-                return book.toList();}
-            case 2 : {
-                System.exit(0);
-            }
-            default :{
-                return "Please select a valid option!";
-            }
+        if (option == 1){
+            Book book = new Book();
+            System.out.println(book.toList());
+        } else if (option == 2) {
+            System.exit(0);
+        } else {
+            OptionResponse();
         }
     }
 }
