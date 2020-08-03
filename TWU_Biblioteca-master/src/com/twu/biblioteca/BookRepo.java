@@ -16,7 +16,7 @@ public class BookRepo {
         StringBuilder result = new StringBuilder();
         List<Book> bookListAvailable = bookList.stream().filter(Book::getAvaliability).collect(Collectors.toList());
         for (Book book : bookListAvailable){
-            result.append("Title: ").append(book.getTitle()).append(" | Author: ").append(book.getAuthor()).append(" | Year Published: ").append(book.getYear()).append("\n");
+            result.append("Title: ").append(book.getTitle()).append(" | Author: ").append(book.getAuthor()).append(" | Year Published: ").append(book.getYear()).append(" | ISBN: ").append(book.getISBN()).append("\n");
         }
         return result.toString();
     }

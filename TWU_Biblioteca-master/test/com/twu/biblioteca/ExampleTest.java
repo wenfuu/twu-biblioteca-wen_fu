@@ -16,21 +16,21 @@ public class ExampleTest {
 
     @Test
     public void shouldReturnBookTitle() {
-        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874), new Book("Title2", "Author2", 1874));
-        assertEquals("Title: Title | Author: Author | Year Published: 1874\nTitle: Title2 | Author: Author2 | Year Published: 1874\n", bookrepo.toList());
+        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
+        assertEquals("Title: Title | Author: Author | Year Published: 1874 | ISBN: 9780582534292\nTitle: Title2 | Author: Author2 | Year Published: 1874 | ISBN: 9780582541436\n", bookrepo.toList());
     }
 
     @Test
     public void shouldAbleToCheckoutABook() {
-        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874), new Book("Title2", "Author2", 1874));
+        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
         bookrepo.getBookList().get(1).checkout();
         assertFalse(bookrepo.getBookList().get(1).getAvaliability());
     }
 
     @Test
     public void shouldNotReturnCheckedOutBooks() {
-        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874), new Book("Title2", "Author2", 1874));
+        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
         bookrepo.getBookList().get(1).checkout();
-        assertEquals("Title: Title | Author: Author | Year Published: 1874\n", bookrepo.toList());
+        assertEquals("Title: Title | Author: Author | Year Published: 1874 | ISBN: 9780582534292\n", bookrepo.toList());
     }
 }

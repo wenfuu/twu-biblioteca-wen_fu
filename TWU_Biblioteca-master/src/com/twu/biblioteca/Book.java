@@ -5,13 +5,15 @@ public class Book {
     private String title;
     private String author;
     private int year;
-    private boolean availability ;
+    private boolean availability;
+    private String ISBN;
 
-    public Book(String title, String author, int year) {
+    public Book(String title, String author, int year, String ISBN) {
         this.title = title;
         this.author = author;
         this.year = year;
         this.availability  = true;
+        this.ISBN = ISBN;
     }
 
     public String getTitle() {
@@ -24,6 +26,10 @@ public class Book {
 
     public int getYear() {
         return year;
+    }
+
+    public String getISBN() {
+        return ISBN;
     }
 
     public void checkout() {
