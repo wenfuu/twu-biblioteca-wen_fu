@@ -34,10 +34,16 @@ public class ConsoleOutput {
         } else if (option == 2) {
             System.out.println("Please enter the ISBN of the book you want to checkout.");
             String ISBN = getInput();
+            boolean ifFind = false;
             for (Book book : bookrepo.getBookList()){
                 if (book.getISBN().equals(ISBN)){
                     book.checkout();
+                    ifFind = true;
+                    System.out.println("Thank you! Enjoy the book");
                 }
+            }
+            if (!ifFind){
+                System.out.println("Sorry, that book is not available");
             }
             optionResponse();
         } else if (option == 3) {
