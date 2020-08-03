@@ -12,7 +12,7 @@ public class ConsoleOutput {
     }
 
     public String menuOptions() {
-        return "Menu: 1.List of books 2.Checkout a book 3.Exit";
+        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.Exit";
     }
 
     public int getOption() {
@@ -39,14 +39,29 @@ public class ConsoleOutput {
                 if (book.getISBN().equals(ISBN)){
                     book.checkout();
                     ifFind = true;
-                    System.out.println("Thank you! Enjoy the book");
+                    System.out.println("Thank you! Enjoy the book.");
                 }
             }
             if (!ifFind){
-                System.out.println("Sorry, that book is not available");
+                System.out.println("Sorry, that book is not available.");
             }
             optionResponse();
         } else if (option == 3) {
+            System.out.println("Please enter the ISBN of the book you want to return.");
+            String ISBN = getInput();
+            boolean ifFind = false;
+            for (Book book : bookrepo.getBookList()){
+                if (book.getISBN().equals(ISBN)){
+                    book.returnBook();
+                    ifFind = true;
+                    System.out.println("Thank you for returning the book.");
+                }
+            }
+            if (!ifFind){
+                System.out.println("That is not a valid book to return.");
+            }
+            optionResponse();
+        } else if (option == 4) {
             System.exit(0);
         } else {
             System.out.println("Please select a valid option!");
