@@ -4,7 +4,7 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
         ConsoleOutput output = new ConsoleOutput();
-        System.out.println(output.WelcomeMessage());
-        output.OptionResponse();
+        System.out.println(output.welcomeMessage());
+        output.optionResponse();
     }
 }

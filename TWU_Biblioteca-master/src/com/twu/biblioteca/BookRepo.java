@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 import	java.util.ArrayList;
 import java.util.Arrays;
 import	java.util.List;
+import java.util.stream.Collectors;
 
 public class BookRepo {
 
@@ -13,9 +14,14 @@ public class BookRepo {
 
     public String toList() {
         StringBuilder result = new StringBuilder();
-        for (Book book : bookList){
+        List<Book> bookListAvailable = bookList.stream().filter(Book::getAvaliability).collect(Collectors.toList());
+        for (Book book : bookListAvailable){
             result.append("Title: ").append(book.getTitle()).append(" | Author: ").append(book.getAuthor()).append(" | Year Published: ").append(book.getYear()).append("\n");
         }
         return result.toString();
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
     }
 }
