@@ -21,8 +21,8 @@ public class ConsoleOutput {
         System.out.println(MenuOptions());
         int option = GetOption();
         if (option == 1){
-            Book book = new Book();
-            System.out.println(book.toList());
+            BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874), new Book("Title2", "Author2", 1874));
+            System.out.println(bookrepo.toList());
         } else if (option == 2) {
             System.exit(0);
         } else {
