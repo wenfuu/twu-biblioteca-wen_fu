@@ -7,6 +7,7 @@ public class Movie {
     private String director;
     private String rating;
     private String imdbCode;
+    private boolean availablity;
 
     public Movie(String name, int year, String director, String rating, String imdbCode) {
         this.name = name;
@@ -14,6 +15,7 @@ public class Movie {
         this.director = director;
         this.rating = rating;
         this.imdbCode = imdbCode;
+        this.availablity = true;
     }
 
     public String getName() {
@@ -32,5 +34,13 @@ public class Movie {
 
     public String getImdbCode() {
         return imdbCode;
+    }
+
+    public void checkout() {
+        this.availablity = false;
+    }
+
+    public boolean getAvailability() {
+        return this.availablity;
     }
 }

@@ -36,7 +36,7 @@ public class Book {
         this.availability = false;
     }
 
-    public boolean getAvaliability() {
+    public boolean getAvailability() {
         return availability;
     }
 

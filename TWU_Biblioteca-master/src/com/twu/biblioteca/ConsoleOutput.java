@@ -13,7 +13,7 @@ public class ConsoleOutput {
     }
 
     public String menuOptions() {
-        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.List of movies 5.Exit";
+        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.List of movies 5.Checkout a movie 6.Exit";
     }
 
     public int getOption() {
@@ -62,11 +62,26 @@ public class ConsoleOutput {
                 System.out.println("That is not a valid book to return.");
             }
             optionResponse();
-        } else if (option == 5) {
-            System.exit(0);
         } else if (option == 4){
             System.out.println(movieRepo.toList());
             optionResponse();
+        } else if (option == 5) {
+            System.out.println("Please enter the IMDb Code of the movie you want to checkout.");
+            String imdbCode = getInput();
+            boolean ifFind = false;
+            for (Movie movie : movieRepo.getMovieList()){
+                if (movie.getImdbCode().equals(imdbCode)){
+                    movie.checkout();
+                    ifFind = true;
+                    System.out.println("Thank you! Enjoy the movie.");
+                }
+            }
+            if (!ifFind){
+                System.out.println("Sorry, that movie is not available.");
+            }
+            optionResponse();
+        } else if (option == 6) {
+            System.exit(0);
         } else {
             System.out.println("Please select a valid option!");
             optionResponse();

@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 import	java.util.ArrayList;
 import java.util.Arrays;
 import	java.util.List;
+import java.util.stream.Collectors;
 
 public class MovieRepo {
 
@@ -13,9 +14,14 @@ public class MovieRepo {
 
     public String toList() {
         StringBuilder result = new StringBuilder();
-        for (Movie movie : movieList){
+        List<Movie> movieListAvailable = movieList.stream().filter(Movie::getAvailability).collect(Collectors.toList());
+        for (Movie movie : movieListAvailable){
             result.append("Name: ").append(movie.getName()).append(" | Year: ").append(movie.getYear()).append(" | Director: ").append(movie.getDirector()).append(" | Rating: ").append(movie.getRating()).append(" | IMDb Code: ").append(movie.getImdbCode()).append("\n");
         }
         return result.toString();
+    }
+
+    public List<Movie> getMovieList() {
+        return movieList;
     }
 }
