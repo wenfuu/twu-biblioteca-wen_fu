@@ -6,14 +6,14 @@ public class ConsoleOutput {
 
     BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
     MovieRepo movieRepo = new MovieRepo(new Movie("Name", 2014, "Director", "8.6", "tt0816692"), new Movie("Name2", 1997, "Director2", "Unrated", "tt0120338"));
-    UserRepo userRepo = new UserRepo(new User("111-2222", "password"), new User("333-4444", "password2"));
+    UserRepo userRepo = new UserRepo(new User("111-2222", "password", "name", "email@a.com", "1113333"), new User("333-4444", "password2", "name2", "email2@b.com", "3335555"));
 
     public String welcomeMessage() {
         return "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     }
 
     public String menuOptions() {
-        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.List of movies 5.Checkout a movie 6.Exit";
+        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.List of movies 5.Checkout a movie 6.View my information 7.Exit";
     }
 
     public int getOption() {
@@ -81,6 +81,8 @@ public class ConsoleOutput {
             }
             optionResponse();
         } else if (option == 6) {
+            showUserInfo(login());
+        } else if (option == 7) {
             System.exit(0);
         } else {
             System.out.println("Please select a valid option!");
@@ -91,6 +93,7 @@ public class ConsoleOutput {
     public String login() {
         System.out.println("Please enter your library number. Enter 'back' to return to menu.");
         String input = getInput();
+        String successfulUser = null;
         if (input.equals("back")) {
             optionResponse();
         }
@@ -100,17 +103,31 @@ public class ConsoleOutput {
                 String password = getInput();
                 if (password.equals(users.getPassword())){
                     System.out.println("Logged in successfully.");
+                    successfulUser = users.getUsername();
                     break;
                 } else {
                     System.out.println("The password you entered is incorrect.");
                     login();
                 }
-                return users.getUsername();
             } else {
                 System.out.println("The library number you entered is incorrect.");
                 login();
             }
         }
-        return null;
+        return successfulUser;
+    }
+
+    public void showUserInfo(String user) {
+        StringBuilder result = new StringBuilder();
+        for (User users : userRepo.getUserList()){
+            if (users.getUsername().equals(user)){
+                result.append("Library number: ").append(users.getUsername()).append("\n")
+                        .append("Name: ").append(users.getName()).append("\n")
+                        .append("Email: ").append(users.getEmail()).append("\n")
+                        .append("Phone number: ").append(users.getNumber());
+            }
+        }
+        System.out.println(result.toString());
+        optionResponse();
     }
 }

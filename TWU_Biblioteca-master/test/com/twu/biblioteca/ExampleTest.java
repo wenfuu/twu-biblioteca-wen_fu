@@ -66,7 +66,7 @@ public class ExampleTest {
     @Test
     public void shouldAbleToKnowWhoCheckedOutTheBook() {
         BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
-        UserRepo userRepo = new UserRepo(new User("111-2222", "password"), new User("333-4444", "password2"));
+        UserRepo userRepo = new UserRepo(new User("111-2222", "password", "name", "email@a.com", "1113333"), new User("333-4444", "password2", "name2", "email2@b.com", "3335555"));
         bookrepo.getBookList().get(1).checkout("111-2222");
         assertFalse(bookrepo.getBookList().get(1).getAvailability());
         assertEquals("111-2222", bookrepo.getBookList().get(1).getBorrower());
