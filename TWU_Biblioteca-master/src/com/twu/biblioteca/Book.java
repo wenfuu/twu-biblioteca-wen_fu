@@ -7,6 +7,7 @@ public class Book {
     private int year;
     private boolean availability;
     private String ISBN;
+    private String borrower;
 
     public Book(String title, String author, int year, String ISBN) {
         this.title = title;
@@ -14,6 +15,7 @@ public class Book {
         this.year = year;
         this.availability  = true;
         this.ISBN = ISBN;
+        this.borrower = null;
     }
 
     public String getTitle() {
@@ -32,8 +34,9 @@ public class Book {
         return ISBN;
     }
 
-    public void checkout() {
+    public void checkout(String user) {
         this.availability = false;
+        this.borrower = user;
     }
 
     public boolean getAvailability() {
@@ -41,5 +44,9 @@ public class Book {
     }
 
     public void returnBook() { this.availability = true;
+    }
+
+    public String getBorrower() {
+        return this.borrower;
     }
 }

@@ -23,21 +23,21 @@ public class ExampleTest {
     @Test
     public void shouldAbleToCheckoutABook() {
         BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
-        bookrepo.getBookList().get(1).checkout();
+        bookrepo.getBookList().get(1).checkout("user2");
         assertFalse(bookrepo.getBookList().get(1).getAvailability());
     }
 
     @Test
     public void shouldNotReturnCheckedOutBooks() {
         BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
-        bookrepo.getBookList().get(1).checkout();
+        bookrepo.getBookList().get(1).checkout("user2");
         assertEquals("Title: Title | Author: Author | Year Published: 1874 | ISBN: 9780582534292\n", bookrepo.toList());
     }
 
     @Test
     public void shouldAbleToReturnABook() {
         BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
-        bookrepo.getBookList().get(1).checkout();
+        bookrepo.getBookList().get(1).checkout("user2");
         bookrepo.getBookList().get(1).returnBook();
         assertTrue(bookrepo.getBookList().get(1).getAvailability());
     }
@@ -53,5 +53,22 @@ public class ExampleTest {
         MovieRepo movieRepo = new MovieRepo(new Movie("Name", 2014, "Director", "8.6", "tt0816692"), new Movie("Name2", 1997, "Director2", "Unrated", "tt0120338"));
         movieRepo.getMovieList().get(1).checkout();
         assertFalse(movieRepo.getMovieList().get(1).getAvailability());
+    }
+
+    @Test
+    public void shouldAbleToLogin() {
+        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
+
+        bookrepo.getBookList().get(1).checkout("user2");
+        assertFalse(bookrepo.getBookList().get(1).getAvailability());
+    }
+
+    @Test
+    public void shouldAbleToKnowWhoCheckedOutTheBook() {
+        BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
+        UserRepo userRepo = new UserRepo(new User("111-2222", "password"), new User("333-4444", "password2"));
+        bookrepo.getBookList().get(1).checkout("111-2222");
+        assertFalse(bookrepo.getBookList().get(1).getAvailability());
+        assertEquals("111-2222", bookrepo.getBookList().get(1).getBorrower());
     }
 }

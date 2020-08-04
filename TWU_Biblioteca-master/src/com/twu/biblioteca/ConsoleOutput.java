@@ -1,12 +1,12 @@
 package com.twu.biblioteca;
 
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class ConsoleOutput {
 
     BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
     MovieRepo movieRepo = new MovieRepo(new Movie("Name", 2014, "Director", "8.6", "tt0816692"), new Movie("Name2", 1997, "Director2", "Unrated", "tt0120338"));
+    UserRepo userRepo = new UserRepo(new User("111-2222", "password"), new User("333-4444", "password2"));
 
     public String welcomeMessage() {
         return "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
@@ -38,7 +38,7 @@ public class ConsoleOutput {
             boolean ifFind = false;
             for (Book book : bookrepo.getBookList()){
                 if (book.getISBN().equals(ISBN)){
-                    book.checkout();
+                    book.checkout(login());
                     ifFind = true;
                     System.out.println("Thank you! Enjoy the book.");
                 }
@@ -86,5 +86,31 @@ public class ConsoleOutput {
             System.out.println("Please select a valid option!");
             optionResponse();
         }
+    }
+
+    public String login() {
+        System.out.println("Please enter your library number. Enter 'back' to return to menu.");
+        String input = getInput();
+        if (input.equals("back")) {
+            optionResponse();
+        }
+        for (User users : userRepo.getUserList()){
+            if (input.equals(users.getUsername())) {
+                System.out.println("Please enter your password.");
+                String password = getInput();
+                if (password.equals(users.getPassword())){
+                    System.out.println("Logged in successfully.");
+                    break;
+                } else {
+                    System.out.println("The password you entered is incorrect.");
+                    login();
+                }
+                return users.getUsername();
+            } else {
+                System.out.println("The library number you entered is incorrect.");
+                login();
+            }
+        }
+        return null;
     }
 }
