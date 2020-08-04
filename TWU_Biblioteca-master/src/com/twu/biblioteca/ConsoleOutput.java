@@ -6,13 +6,14 @@ import java.util.stream.Collectors;
 public class ConsoleOutput {
 
     BookRepo bookrepo = new BookRepo(new Book("Title", "Author", 1874, "9780582534292"), new Book("Title2", "Author2", 1874, "9780582541436"));
+    MovieRepo movieRepo = new MovieRepo(new Movie("Name", 2014, "Director", "8.6", "tt0816692"), new Movie("Name2", 1997, "Director2", "Unrated", "tt0120338"));
 
     public String welcomeMessage() {
         return "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     }
 
     public String menuOptions() {
-        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.Exit";
+        return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.List of movies 5.Exit";
     }
 
     public int getOption() {
@@ -61,8 +62,11 @@ public class ConsoleOutput {
                 System.out.println("That is not a valid book to return.");
             }
             optionResponse();
-        } else if (option == 4) {
+        } else if (option == 5) {
             System.exit(0);
+        } else if (option == 4){
+            System.out.println(movieRepo.toList());
+            optionResponse();
         } else {
             System.out.println("Please select a valid option!");
             optionResponse();

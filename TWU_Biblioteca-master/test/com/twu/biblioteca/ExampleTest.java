@@ -41,4 +41,10 @@ public class ExampleTest {
         bookrepo.getBookList().get(1).returnBook();
         assertTrue(bookrepo.getBookList().get(1).getAvaliability());
     }
+
+    @Test
+    public void shouldReturnMovieList() {
+        MovieRepo movieRepo = new MovieRepo(new Movie("Name", 2014, "Director", "8.6", "tt0816692"), new Movie("Name2", 1997, "Director2", "Unrated", "tt0120338"));
+        assertEquals("Name: Name | Year: 2014 | Director: Director | Rating: 8.6 | IMDb Code: tt0816692\nName: Name2 | Year: 1997 | Director: Director2 | Rating: Unrated | IMDb Code: tt0120338\n", movieRepo.toList());
+    }
 }
