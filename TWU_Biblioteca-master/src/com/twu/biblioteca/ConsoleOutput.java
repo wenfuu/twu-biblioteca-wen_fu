@@ -1,4 +1,5 @@
 package com.twu.biblioteca;
+import	java.util.HashMap;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 import java.util.Optional;
@@ -20,63 +21,126 @@ public class ConsoleOutput {
         return "Menu: 1.List of books 2.Checkout a book 3.Return a book 4.List of movies 5.Checkout a movie 6.View my information 7.Exit";
     }
 
-    public int getOption() {
-        Scanner sc = new Scanner(System.in);
-        return sc.nextInt();
-    }
-
     public String getInput() {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
+    
+    public enum Command{
+        bookList("1"),
+        checkoutBook("2"),
+        returnBook("3"),
+        movieList("4"),
+        checkoutMovie("5"),
+        viewInfo("6"),
+        exit("7");
+        private String commandStr;
+        Command(String commandStr) {
+            this.commandStr = commandStr;
+        }
+        private static final Map<String, Command> stringToCommand = new HashMap<String, Command> ();
+        static {
+            for(Command command : values()){
+                stringToCommand.put(command.toString(), command);
+            }
+        }
+        public static Command fromString(String commandStr){
+            return stringToCommand.get(commandStr);
+        }
+        @Override
+        public String toString(){
+            return this.commandStr;
+        }
+    }
 
     public void optionResponse() {
-        System.out.println(menuOptions());
-        int option = getOption();
-        if (option == 1){
-            System.out.println(bookrepo.toList());
-            optionResponse();
-        } else if (option == 2) {
-            System.out.println("Please enter the ISBN of the book you want to checkout.");
-            Optional <Book> Book = bookrepo.findABook(getInput());
-            if (Book.isPresent()){
-                Book.get().checkout(login());
-                System.out.println("Thank you! Enjoy the book.");
-            } else {
-                System.out.println("Sorry, that book is not available.");
+        System.out.println(menuOptions());;
+        switch (Command.fromString(getInput())) {
+            case bookList:
+                bookList();
+                break;
+            case checkoutBook: {
+                checkoutBook();
+                break;
             }
-            optionResponse();
-        } else if (option == 3) {
-            System.out.println("Please enter the ISBN of the book you want to return.");
-            Optional <Book> Book = bookrepo.findABook(getInput());
-            if (Book.isPresent()){
-                Book.get().checkout(login());
-                System.out.println("Thank you for returning the book.");
-            } else {
-                System.out.println("That is not a valid book to return.");
+            case returnBook: {
+                returnBook();
+                break;
             }
-            optionResponse();
-        } else if (option == 4){
-            System.out.println(movieRepo.toList());
-            optionResponse();
-        } else if (option == 5) {
-            System.out.println("Please enter the IMDb Code of the movie you want to checkout.");
-            Optional <Movie> Movie = movieRepo.findAMovie(getInput());
-            if (Movie.isPresent()){
-                Movie.get().checkout();
-                System.out.println("Thank you! Enjoy the movie.");
-            } else {
-                System.out.println("Sorry, that movie is not available.");
-            }
-            optionResponse();
-        } else if (option == 6) {
-            showUserInfo(login());
-        } else if (option == 7) {
-            System.exit(0);
-        } else {
-            System.out.println("Please select a valid option!");
-            optionResponse();
+            case movieList:
+                movieList();
+                break;
+            case checkoutMovie:
+                checkoutMovie();
+                break;
+            case viewInfo:
+                viewInfo();
+                break;
+            case exit:
+                exit();
+            default:
+                validOption();
+                break;
         }
+    }
+
+    public void bookList(){
+        System.out.println(bookrepo.toList());
+        optionResponse();
+    }
+
+    public void checkoutBook(){
+        System.out.println("Please enter the ISBN of the book you want to checkout.");
+        Optional<Book> Book = bookrepo.findABook(getInput());
+        if (Book.isPresent()) {
+            Book.get().checkout(login());
+            System.out.println("Thank you! Enjoy the book.");
+        } else {
+            System.out.println("Sorry, that book is not available.");
+        }
+        optionResponse();
+    }
+
+    public void returnBook(){
+        System.out.println("Please enter the ISBN of the book you want to return.");
+        Optional<Book> Book = bookrepo.findABook(getInput());
+        if (Book.isPresent()) {
+            Book.get().checkout(login());
+            System.out.println("Thank you for returning the book.");
+        } else {
+            System.out.println("That is not a valid book to return.");
+        }
+        optionResponse();
+    }
+
+    public void movieList(){
+        System.out.println(movieRepo.toList());
+        optionResponse();
+    }
+
+    public void checkoutMovie(){
+        System.out.println("Please enter the IMDb Code of the movie you want to checkout.");
+        Optional<Movie> Movie = movieRepo.findAMovie(getInput());
+        if (Movie.isPresent()) {
+            Movie.get().checkout();
+            System.out.println("Thank you! Enjoy the movie.");
+        } else {
+            System.out.println("Sorry, that movie is not available.");
+        }
+        optionResponse();
+    }
+
+    public void viewInfo(){
+        showUserInfo(login());
+    }
+
+    public void exit(){
+        System.exit(0);
+    }
+
+    public void validOption() {
+        System.out.println("Please select a valid option!");
+        optionResponse();
     }
 
     public String login() {
