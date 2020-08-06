@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 import	java.util.Arrays;
 import	java.util.ArrayList;
 import	java.util.List;
+import java.util.Optional;
 
 public class UserRepo {
 
@@ -15,4 +16,7 @@ public class UserRepo {
         return userList;
     }
 
+    public Optional<User> findAUser(String username){
+        return userList.stream().filter(u -> u.getUsername().equals(username)).findFirst();
+    }
 }

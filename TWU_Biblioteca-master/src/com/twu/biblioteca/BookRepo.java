@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 import	java.util.ArrayList;
 import java.util.Arrays;
 import	java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookRepo {
@@ -23,5 +24,9 @@ public class BookRepo {
 
     public List<Book> getBookList() {
         return bookList;
+    }
+
+    public Optional<Book> findABook(String isbnCode){
+        return bookList.stream().filter(b -> b.getISBN().equals(isbnCode)).findFirst();
     }
 }

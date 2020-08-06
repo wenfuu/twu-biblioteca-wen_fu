@@ -1,4 +1,8 @@
 package com.twu.biblioteca;
+import java.awt.event.MouseEvent;
+import java.util.Map;
+import java.util.Optional;
+import	java.util.stream.Collectors;
 
 import java.util.Scanner;
 
@@ -34,31 +38,21 @@ public class ConsoleOutput {
             optionResponse();
         } else if (option == 2) {
             System.out.println("Please enter the ISBN of the book you want to checkout.");
-            String ISBN = getInput();
-            boolean ifFind = false;
-            for (Book book : bookrepo.getBookList()){
-                if (book.getISBN().equals(ISBN)){
-                    book.checkout(login());
-                    ifFind = true;
-                    System.out.println("Thank you! Enjoy the book.");
-                }
-            }
-            if (!ifFind){
+            Optional <Book> Book = bookrepo.findABook(getInput());
+            if (Book.isPresent()){
+                Book.get().checkout(login());
+                System.out.println("Thank you! Enjoy the book.");
+            } else {
                 System.out.println("Sorry, that book is not available.");
             }
             optionResponse();
         } else if (option == 3) {
             System.out.println("Please enter the ISBN of the book you want to return.");
-            String ISBN = getInput();
-            boolean ifFind = false;
-            for (Book book : bookrepo.getBookList()){
-                if (book.getISBN().equals(ISBN)){
-                    book.returnBook();
-                    ifFind = true;
-                    System.out.println("Thank you for returning the book.");
-                }
-            }
-            if (!ifFind){
+            Optional <Book> Book = bookrepo.findABook(getInput());
+            if (Book.isPresent()){
+                Book.get().checkout(login());
+                System.out.println("Thank you for returning the book.");
+            } else {
                 System.out.println("That is not a valid book to return.");
             }
             optionResponse();
@@ -67,16 +61,11 @@ public class ConsoleOutput {
             optionResponse();
         } else if (option == 5) {
             System.out.println("Please enter the IMDb Code of the movie you want to checkout.");
-            String imdbCode = getInput();
-            boolean ifFind = false;
-            for (Movie movie : movieRepo.getMovieList()){
-                if (movie.getImdbCode().equals(imdbCode)){
-                    movie.checkout();
-                    ifFind = true;
-                    System.out.println("Thank you! Enjoy the movie.");
-                }
-            }
-            if (!ifFind){
+            Optional <Movie> Movie = movieRepo.findAMovie(getInput());
+            if (Movie.isPresent()){
+                Movie.get().checkout();
+                System.out.println("Thank you! Enjoy the movie.");
+            } else {
                 System.out.println("Sorry, that movie is not available.");
             }
             optionResponse();
@@ -97,22 +86,18 @@ public class ConsoleOutput {
         if (input.equals("back")) {
             optionResponse();
         }
-        for (User users : userRepo.getUserList()){
-            if (input.equals(users.getUsername())) {
-                System.out.println("Please enter your password.");
-                String password = getInput();
-                if (password.equals(users.getPassword())){
-                    System.out.println("Logged in successfully.");
-                    successfulUser = users.getUsername();
-                    break;
-                } else {
-                    System.out.println("The password you entered is incorrect.");
-                    login();
-                }
+        Optional <User> User = userRepo.findAUser(input);
+        if (User.isPresent()){
+            System.out.println("Please enter your password.");
+            if (User.get().getPassword().equals(getInput())){
+                successfulUser = User.get().getUsername();
             } else {
-                System.out.println("The library number you entered is incorrect.");
+                System.out.println("The password you entered is incorrect.");
                 login();
             }
+        } else {
+            System.out.println("The library number you entered is incorrect.");
+            login();
         }
         return successfulUser;
     }

@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 import	java.util.ArrayList;
 import java.util.Arrays;
 import	java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MovieRepo {
@@ -23,5 +24,9 @@ public class MovieRepo {
 
     public List<Movie> getMovieList() {
         return movieList;
+    }
+
+    public Optional<Movie> findAMovie(String imdbCode){
+        return movieList.stream().filter(b -> b.getImdbCode().equals(imdbCode)).findFirst();
     }
 }
